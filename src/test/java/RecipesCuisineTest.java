@@ -9,15 +9,13 @@ public class RecipesCuisineTest extends AbstractTest {
     @DisplayName("Search with valid title")
     void searchWithTitle() {
         given()
-                .queryParam("apiKey", getApiKey())
+                .spec(getRequestSpecification())
                 .formParam("title", "Cauliflower, Brown Rice, and Vegetable Fried Rice")
                 .when()
                 .post(getBaseUrl() + getCuisine())
                 .prettyPeek()
                 .then()
-                .assertThat()
-                .statusCode(200)
-                .contentType("application/json")
+                .spec(getResponseSpecificationOK())
                 .body("cuisines[0]", equalTo("Chinese"))
                 .body("cuisines[1]", equalTo("Asian"));
     }
@@ -27,13 +25,12 @@ public class RecipesCuisineTest extends AbstractTest {
     void searchWithLangParam() {
         given()
                 .log().params()
-                .queryParam("apiKey", getApiKey())
+                .spec(getRequestSpecification())
                 .queryParam("language", "fr")
                 .when()
                 .post(getBaseUrl() + getCuisine())
                 .prettyPeek()
                 .then()
-                .assertThat()
                 .statusCode(500);
     }
 
@@ -41,30 +38,30 @@ public class RecipesCuisineTest extends AbstractTest {
     @DisplayName("Search with ingredient list")
     void searchWithIngList() {
         given()
-                .queryParam("apiKey", getApiKey())
+                .spec(getRequestSpecification())
                 .formParam("ingredientList", "3 oz pork shoulder")
                 .when()
                 .post(getBaseUrl() + getCuisine())
                 .prettyPeek()
                 .then()
                 .assertThat()
-                .statusCode(200)
-                .body("cuisines[0]", equalTo("Mediterranean"))
-                .body("cuisines[1]", equalTo("European"))
-                .body("cuisines[2]", equalTo("Italian"));
+                .spec(getResponseSpecificationOK())
+                .body("cuisines[0]", equalTo("Italian"))
+                .body("cuisines[1]", equalTo("Mediterranean"))
+                .body("cuisines[2]", equalTo("European"));
+
     }
 
     @Test
-    @DisplayName("Response with invalid request contern type")
+    @DisplayName("Response with invalid request content type")
     void verifyInvContTypeReq() {
         given()
-                .queryParam("apiKey", getApiKey())
+                .spec(getRequestSpecification())
                 .header("Content-Type", "form-data")
                 .when()
                 .post(getBaseUrl() + getCuisine())
                 .prettyPeek()
                 .then()
-                .assertThat()
                 .statusCode(500);
     }
 
@@ -72,13 +69,12 @@ public class RecipesCuisineTest extends AbstractTest {
     @DisplayName("Request with invalid method")
     void verifyRequestWithInvMethod() {
         given()
-                .queryParam("apiKey", getApiKey())
+                .spec(getRequestSpecification())
                 .formParam("title", "Cauliflower, Brown Rice, and Vegetable Fried Rice")
                 .when()
                 .get(getBaseUrl() + getCuisine())
                 .prettyPeek()
                 .then()
-                .assertThat()
                 .statusCode(405);
     }
 }

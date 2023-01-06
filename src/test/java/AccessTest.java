@@ -12,7 +12,7 @@ public class AccessTest extends AbstractTest {
                 .when()
                 .get(getBaseUrl() + getComplexSearch())
                 .then()
-                .statusCode(401);
+                .spec(getResponseSpecification401());
     }
 
     @Test
@@ -23,6 +23,6 @@ public class AccessTest extends AbstractTest {
                 .when()
                 .get(AbstractTest.getBaseUrl() + getComplexSearch())
                 .then()
-                .statusCode(401);
+                .spec(getResponseSpecification401());
     }
 }

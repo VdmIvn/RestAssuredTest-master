@@ -9,40 +9,37 @@ public class EquivalenceClassesTest extends AbstractTest {
     @DisplayName("Search with default result number")
     void defaultSearch() {
         given()
-                .queryParam("apiKey", AbstractTest.getApiKey())
+                .spec(getRequestSpecification())
                 .when()
                 .get(getBaseUrl() + getComplexSearch())
                 .then()
-                .statusCode(200)
-                .assertThat().contentType("application/json")
-                .assertThat().body("number", equalTo(10));
+                .spec(getResponseSpecificationOK())
+                .body("number", equalTo(10));
     }
 
     @Test
     @DisplayName("Search for max number + 1 result")
     void searchForMaxPlus() {
         given()
-                .queryParam("apiKey", AbstractTest.getApiKey())
+                .spec(getRequestSpecification())
                 .queryParam("number", "101")
                 .when()
                 .get(getBaseUrl() + getComplexSearch())
                 .then()
-                .statusCode(200)
-                .assertThat().contentType("application/json")
-                .assertThat().body("number", equalTo(100));
+                .spec(getResponseSpecificationOK())
+                .body("number", equalTo(100));
     }
 
     @Test
     @DisplayName("Search for 0 result")
     void searchForZeroResults() {
         given()
-                .queryParam("apiKey", AbstractTest.getApiKey())
+                .spec(getRequestSpecification())
                 .queryParam("number", "0")
                 .when()
                 .get(getBaseUrl() + getComplexSearch())
                 .then()
-                .statusCode(200)
-                .assertThat().contentType("application/json")
-                .assertThat().body("number", equalTo(1));
+                .spec(getResponseSpecificationOK())
+                .body("number", equalTo(1));
     }
 }

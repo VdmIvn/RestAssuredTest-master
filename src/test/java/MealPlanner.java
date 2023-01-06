@@ -11,7 +11,7 @@ public class MealPlanner extends AbstractTest {
     void verifyMealPlanner() {
         Response response;
         response = given()
-                .queryParam("apiKey", getApiKey())
+                .spec(getRequestSpecification())
                 .body("{\n" +
                         "    \"username\": \"Vadim\",\n" +
                         "    \"firstName\": \"Vadim\",\n" +
@@ -59,8 +59,7 @@ public class MealPlanner extends AbstractTest {
                 .delete(getBaseUrl() + "mealplanner/vadim1/items/" + id)
                 .prettyPeek()
                 .then()
-                .statusCode(200)
-                .assertThat()
+                .spec(getResponseSpecificationOK())
                 .body("status", equalTo("success"));
 
     }

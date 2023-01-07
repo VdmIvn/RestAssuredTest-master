@@ -46,9 +46,9 @@ public class RecipesCuisineTest extends AbstractTest {
                 .then()
                 .assertThat()
                 .spec(getResponseSpecificationOK())
-                .body("cuisines[0]", equalTo("Italian"))
-                .body("cuisines[1]", equalTo("Mediterranean"))
-                .body("cuisines[2]", equalTo("European"));
+                .body("cuisines[0]", equalTo("Mediterranean"))
+                .body("cuisines[1]", equalTo("European"))
+                .body("cuisines[2]", equalTo("Italian"));
 
     }
 
